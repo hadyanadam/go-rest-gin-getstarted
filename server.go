@@ -9,7 +9,6 @@ import (
 	"github.com/hadyanadam/golang-tutorial-gin/controller"
 	"github.com/hadyanadam/golang-tutorial-gin/middlewares"
 	"github.com/hadyanadam/golang-tutorial-gin/service"
-	gindump "github.com/tpkeeper/gin-dump"
 )
 
 
@@ -27,13 +26,11 @@ func setupLogOutput() {
 func main() {
 	setupLogOutput()
 
-	server := gin.New()
+	server := gin.Default()
 
 	server.Static("/css", "./templates/css")
 
 	server.LoadHTMLGlob("templates/*.html")
-
-	server.Use(gin.Recovery(), middlewares.Logger(), gindump.Dump())
 
 	apiRoutes := server.Group("/api")
 	apiRoutes.Use(middlewares.BasicAuth())
